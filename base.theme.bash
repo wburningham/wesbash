@@ -71,17 +71,22 @@ function git_prompt_vars {
 
 
 function hg_prompt_vars {
-    if [[ -n $(hg status 2> /dev/null) ]]; then
-      SCM_DIRTY=1
-        SCM_STATE=${HG_THEME_PROMPT_DIRTY:-$SCM_THEME_PROMPT_DIRTY}
-    else
-      SCM_DIRTY=0
-        SCM_STATE=${HG_THEME_PROMPT_CLEAN:-$SCM_THEME_PROMPT_CLEAN}
-    fi
+    # if [[ -n $(hg status -q 2> /dev/null) ]]; then
+    #   SCM_DIRTY=1
+    #     SCM_STATE=${HG_THEME_PROMPT_DIRTY:-$SCM_THEME_PROMPT_DIRTY}
+    # else
+    #   SCM_DIRTY=0
+    #     SCM_STATE=${HG_THEME_PROMPT_CLEAN:-$SCM_THEME_PROMPT_CLEAN}
+    # fi
+	 SCM_STATE=''
     SCM_PREFIX=${HG_THEME_PROMPT_PREFIX:-$SCM_THEME_PROMPT_PREFIX}
     SCM_SUFFIX=${HG_THEME_PROMPT_SUFFIX:-$SCM_THEME_PROMPT_SUFFIX}
-    SCM_BRANCH=$(hg summary 2> /dev/null | grep branch | awk '{print $2}')
-    SCM_CHANGE=$(hg summary 2> /dev/null | grep parent | awk '{print $2}')
+	 # Call hg summary once since it is a little slow and cache the result to process with awk
+    TMP_SUMMARY=$(hg summary 2> /dev/null)
+	 SCM_BRANCH=$(echo $TMP_SUMMARY | awk -F"branch: " '{print $2}' | awk '{print $1}')
+	 SCM_CHANGE=$(echo $TMP_SUMMARY | awk -F"parent: " '{print $2}' | awk '{print $1}')
+    # SCM_BRANCH=$(hg summary 2> /dev/null | grep branch | awk '{print $2}')
+    # SCM_CHANGE=$(hg summary 2> /dev/null | grep parent | awk '{print $2}')
 }
 
 
