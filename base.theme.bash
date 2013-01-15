@@ -82,9 +82,13 @@ function hg_prompt_vars {
     SCM_PREFIX=${HG_THEME_PROMPT_PREFIX:-$SCM_THEME_PROMPT_PREFIX}
     SCM_SUFFIX=${HG_THEME_PROMPT_SUFFIX:-$SCM_THEME_PROMPT_SUFFIX}
 	 # Call hg summary once since it is a little slow and cache the result to process with awk
-    TMP_SUMMARY=$(hg summary 2> /dev/null)
-	 SCM_BRANCH=$(echo $TMP_SUMMARY | awk -F"branch: " '{print $2}' | awk '{print $1}')
-	 SCM_CHANGE=$(echo $TMP_SUMMARY | awk -F"parent: " '{print $2}' | awk '{print $1}')
+    # TMP_SUMMARY=$(hg summary 2> /dev/null)
+	 # SCM_BRANCH=$(echo $TMP_SUMMARY | awk -F"branch: " '{print $2}' | awk '{print $1}')
+	 # SCM_CHANGE=$(echo $TMP_SUMMARY | awk -F"parent: " '{print $2}' | awk '{print $1}')
+	 if [ -f ".hg/branch" ];
+	 then SCM_BRANCH=$(cat .hg/branch); 
+	 else SCM_BRANCH='default';
+	 fi
     # SCM_BRANCH=$(hg summary 2> /dev/null | grep branch | awk '{print $2}')
     # SCM_CHANGE=$(hg summary 2> /dev/null | grep parent | awk '{print $2}')
 }
