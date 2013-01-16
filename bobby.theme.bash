@@ -13,7 +13,7 @@ GIT_THEME_PROMPT_SUFFIX="${green}|"
 function prompt_command() {
     # PS1="${bold_cyan}$(scm_char)${green}$(scm_prompt_info)${purple} ${yellow}\h ${reset_color}in ${green}\w ${reset_color}\n${green}→${reset_color} "
     # PS1="\n${purple}\h ${reset_color}in ${green}\w\n${bold_cyan}$(scm_char)${green}$(scm_prompt_info) ${green}→${reset_color} "
-    PS1="${purple}\h ${reset_color}in ${green}\w\n${bold_cyan}$(scm_char)${green}$(scm_prompt_info) ${green}→${reset_color} "
+    PS1="\n${purple}\h ${reset_color}in ${green}\w\n${bold_cyan}$(scm_char)${green}$(scm_prompt_info) ${green}→${reset_color} "
 }
 
 PROMPT_COMMAND=prompt_command;
